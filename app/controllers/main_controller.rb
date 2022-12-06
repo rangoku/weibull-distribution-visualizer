@@ -1,13 +1,14 @@
 require 'csv'
+
 class MainController < ApplicationController
   include MainHelper
 
   @@results = {}
 
   def home
-    @data = flash[:data]
-    @k = flash[:k]
-    @l = flash[:l]
+    @pdf_data = flash[:pdf_data]
+    @shape = flash[:shape]
+    @scale = flash[:scale]
     @x = flash[:x]
     @inc = flash[:inc]
     @rep = flash[:rep]
@@ -31,14 +32,11 @@ class MainController < ApplicationController
     end
 
     @randoms = {}
-    @data = []
-  end
-
-  def help
+    @pdf_data = []
   end
 
   def set_data
-    w = Weibull.new(params[:k].to_f, params[:l].to_f)
+    w = Weibull.new(params[:shape].to_f, params[:scale].to_f)
     probabilities = {}
     s1 = params[:x].to_f
     s2 = params[:x].to_f + params[:inc].to_f * params[:rep].to_f
@@ -56,10 +54,10 @@ class MainController < ApplicationController
     }
 
     redirect_to "/", flash: {
-      :data => probabilities,
+      :pdf_data => probabilities,
       :authenticity_token => params[:authenticity_token],
-      :k => params[:k],
-      :l => params[:l],
+      :shape => params[:shape],
+      :scale => params[:scale],
       :x => params[:x],
       :inc => params[:inc],
       :rep => params[:rep]

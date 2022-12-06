@@ -1,14 +1,14 @@
-<%= line_chart @data, download: true %>
+<%= line_chart [{ name: "pdf", data: @pdf_data }], download: true %>
 <br/>
 <br/>
 <br/>
 <%= form_with(local: true) do |form| %>
   <div class="field form-group">
-    <%= form.text_field :k, class:"form-control", placeholder:"Shape", value: @k %>
+    <%= form.text_field :shape, class:"form-control", placeholder:"Shape", value: @shape %>
   </div>
 
   <div class="field form-group">
-    <%= form.text_field :l, class:"form-control", placeholder:"Scale", value: @l %>
+    <%= form.text_field :scale, class:"form-control", placeholder:"Scale", value: @scale %>
   </div>
 
   <div class="field form-group">
@@ -53,7 +53,7 @@
 
 <br/>
 <br/>
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-hover">
   <thead class="thead-dark">
   <tr>
     <th>X</th>
@@ -62,7 +62,7 @@
   </thead>
 
   <tbody>
-  <% @data.each do |d| %>
+  <% @pdf_data.each do |d| %>
       <tr>
         <td><%= d[0] %></td>
         <td><%= d[1] %></td>
